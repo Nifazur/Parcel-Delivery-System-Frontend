@@ -17,6 +17,8 @@ import { senderSidebarItems } from './senderRoutes'
 import { receiverSidebarItems } from './receiverRoutes'
 import { commonUserSidebarItems } from './commonUserRoutes'
 import CreateParcel from '@/pages/dashboards/CreateParcel'
+import ParcelDetails from '@/pages/public/4.Tracking/ParcelDetails'
+import TrackingSearch from '@/pages/public/4.Tracking/TrackingSearch'
 
 export const router = createBrowserRouter([
     {
@@ -36,10 +38,6 @@ export const router = createBrowserRouter([
                 Component: Contact
             },
             {
-                path: "track-parcel/:id",
-                Component: Tracking
-            },
-            {
                 path: "login",
                 Component: Login
             },
@@ -54,6 +52,18 @@ export const router = createBrowserRouter([
             {
                 Component: CreateParcel,
                 path: "/create-parcel"
+            },
+            {
+                path: "track-parcel/:id",
+                Component: Tracking
+            },
+            {
+                path: "track-parcel",
+                Component: TrackingSearch
+            },
+            {
+                Component: ParcelDetails,
+                path: "/parcel-details/:id",
             },
             {
                 Component: withAuth(DashboardLayout, role.superAdmin as TRole),

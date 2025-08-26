@@ -13,8 +13,11 @@ const ParcelTableTrow = ({ parcel }: ParcelTableTrowProps) => {
   const navigate = useNavigate();
 
   const handleView = () => {
-    navigate(`/track-parcel/${parcel.trackingId}`);
+    navigate(`/parcel-details/${parcel._id}`);
   };
+
+  console.log(parcel);
+  
 
   return (
     <>

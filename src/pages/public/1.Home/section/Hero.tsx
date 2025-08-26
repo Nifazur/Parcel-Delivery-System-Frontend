@@ -3,12 +3,16 @@ import { Search } from 'lucide-react';
 import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
 import heroAnimation from '@/assets/deliveryman.json';
+import { useNavigate } from 'react-router';
 
 const Hero = () => {
   const [trackingId, setTrackingId] = useState('');
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const inputRef = useRef(null);
+  const navigate = useNavigate()
+
+  
 
   // GSAP animations
   useLayoutEffect(() => {
@@ -26,7 +30,7 @@ const Hero = () => {
   const handleTrackingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (trackingId.trim()) {
-      console.log('Tracking ID:', trackingId);
+      navigate(`/track-parcel/${trackingId}`)
     }
   };
 
@@ -91,7 +95,7 @@ const Hero = () => {
               </div>
 
               <div className="mt-4 text-sm text-muted-foreground">
-                <p>Try: FB123456789, FB987654321, or FB555666777</p>
+                <p>Try: TRK-202508333-IEPB5V, or TRK-20250333-IEPB5V</p>
               </div>
             </div>
           </div>

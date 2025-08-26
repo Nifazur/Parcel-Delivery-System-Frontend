@@ -1,5 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse, IParcel, ParcelStatus, Parcel } from "@/types";
+import type { IParcelDetails } from "@/types/parcel.type";
 
 export const parcelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,7 +13,7 @@ export const parcelApi = baseApi.injectEndpoints({
       invalidatesTags: ["PARCEL"],
     }),
     
-    getParcelById: builder.query<IResponse<IParcel>, string>({
+    getParcelById: builder.query<IResponse<IParcelDetails>, string>({
       query: (id) => ({
         url: `/parcel/${id}`,
         method: "GET",

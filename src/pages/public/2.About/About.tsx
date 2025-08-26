@@ -152,7 +152,7 @@ const AboutPage: React.FC = () => {
             <div className="space-y-8">
               <div>
                 <Badge variant="secondary" className="mb-4">
-                  About SwiftDelivery
+                  About FastBox
                 </Badge>
                 <h1 className="text-5xl md:text-6xl font-bold text-primary mb-6">
                   Delivering Trust, 
@@ -216,7 +216,7 @@ const AboutPage: React.FC = () => {
               </h2>
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Founded in 2018 by Ahmed Hassan, SwiftDelivery began as a small logistics 
+                  Founded in 2018 by Ahmed Hassan, FastBox began as a small logistics 
                   startup with a big vision: to revolutionize parcel delivery in Bangladesh 
                   through technology and exceptional service.
                 </p>
@@ -285,10 +285,10 @@ const AboutPage: React.FC = () => {
             {values.map((value, index) => (
               <Card 
                 key={index}
-                className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2"
               >
                 <CardContent className="p-8">
-                  <div className="mb-6">
+                  <div className="mb-6 flex justify-center">
                     {value.icon}
                   </div>
                   <h3 className="text-xl font-bold text-card-foreground mb-4">
@@ -313,7 +313,7 @@ const AboutPage: React.FC = () => {
             </h2>
             <div className="h-1 bg-primary rounded-full w-32 mx-auto mb-6"></div>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The passionate people behind SwiftDelivery's success
+              The passionate people behind FastBox's success
             </p>
           </div>
           

@@ -63,3 +63,30 @@ export interface Parcel {
   trackingId: string;
   __v: number;
 }
+
+export interface Person {
+    _id: string;
+    name: string;
+    email: string;
+}
+
+export interface IParcelDetails {
+    _id: string;
+    type: string;
+    weight: number;
+    sender: Person;
+    receiver: Person;
+    fromAddress: string;
+    toAddress: string;
+    division: string;
+    deliveryDate: string;
+    fee: number;
+    status: string;
+    isBlocked: boolean;
+    isCancelled: boolean;
+    statusLogs: any[];
+    createdAt: Date;
+    updatedAt: string;
+    trackingId: string;
+    __v?: number;
+}

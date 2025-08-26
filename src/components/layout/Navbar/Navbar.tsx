@@ -18,7 +18,7 @@ const Navbar = () => {
         { name: "Home", path: "/", icon: Home },
         { name: "About", path: "/about", icon: HelpCircle },
         { name: "Contact", path: "/contact", icon: MapPin },
-        { name: "Tracking", path: "/tracking", icon: Search },
+        { name: "Tracking", path: "/track-parcel", icon: Search },
     ];
 
     const { data, isLoading } = useUserInfoQuery(undefined);
