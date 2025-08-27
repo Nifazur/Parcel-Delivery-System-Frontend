@@ -7,7 +7,7 @@ import {
   XCircle,
   Clock,
   RefreshCw,
-  Eye
+
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,9 +20,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useGetAllParcelsQuery, useGetParcelStatisticsQuery } from '@/redux/features/parcelApi';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useGetAllParcelsQuery, useGetParcelStatisticsQuery, useUpdateParcelStatusMutation } from '@/redux/features/parcelApi';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router';
 
 import StatusBadge from '@/components/StatusBadge';
 import ParcelCard from '@/components/dashboardComponents/parcelTable/ParcelCard';
@@ -33,15 +35,19 @@ import ParcelTableHeader from '@/components/dashboardComponents/parcelTable/Parc
 
 import type { IParcel } from '@/types';
 import type { Person } from '@/types/parcel.type';
+import { useForm } from 'react-hook-form';
 
 const ReceivedParcels: React.FC = () => {
+  const [selectedParcelId, setSelectedParcelId] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [updateStatus, { isLoading: updateStatusLoading }] = useUpdateParcelStatusMutation();
+  const { register, handleSubmit, reset } = useForm();
   const [sortBy, setSortBy] = useState('latest');
   const [statusFilter, setStatusFilter] = useState('all');
   const [page, setPage] = useState(1);
   const limit = 5;
 
-  const navigate = useNavigate();
-  
+
   // Call ALL hooks at the top - no conditional hook calls!
   const { data: parcelStatistics, isLoading: statisticsLoading } = useGetParcelStatisticsQuery();
   const { data, isLoading, refetch } = useGetAllParcelsQuery({ page, limit });
@@ -135,6 +141,31 @@ const ReceivedParcels: React.FC = () => {
     );
   }
 
+
+  const onSubmit = async (data: any) => {
+    if (!selectedParcelId) return;
+
+    try {
+      await updateStatus({
+        id: selectedParcelId,
+        statusData: {
+          status: data.status,
+          location: data.location,
+          note: data.note,
+        },
+      }).unwrap();
+
+      toast.success("Parcel status updated successfully");
+      setOpen(false);
+      reset();
+      setSelectedParcelId(null);
+      refetch();
+    } catch (err) {
+      console.error("Failed to update status", err);
+      toast.error("Failed to update status");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -221,9 +252,65 @@ const ReceivedParcels: React.FC = () => {
                             key={parcel._id}
                             parcel={parcel}
                             user={parcel.sender as Person}
+                            actionButton={
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  setSelectedParcelId(parcel._id as string);
+                                  setOpen(true);
+                                }}
+                              >
+                                Change Status
+                              </Button>
+                            }
                           />
                         ))}
                       </tbody>
+
+                      <Dialog open={open} onOpenChange={setOpen}>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Update Parcel Status</DialogTitle>
+                          </DialogHeader>
+
+                          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium">New Status</label>
+                              <select
+                                {...register("status")}
+                                className="w-full border rounded-md p-2"
+                              >
+                                <option value="requested">Requested</option>
+                                <option value="approved">Approved</option>
+                                <option value="dispatched">Dispatched</option>
+                                <option value="in_transit">In Transit</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                              </select>
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium">Location</label>
+                              <Input {...register("location")} placeholder="Enter current location" />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium">Note</label>
+                              <Textarea {...register("note")} placeholder="Optional note" />
+                            </div>
+
+                            <DialogFooter>
+                              <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
+                                Cancel
+                              </Button>
+                              <Button type="submit" disabled={updateStatusLoading}>
+                                {updateStatusLoading ? "Updating..." : "Update"}
+                              </Button>
+                            </DialogFooter>
+                          </form>
+                        </DialogContent>
+                      </Dialog>
                     </table>
                   </div>
                 </div>
@@ -248,10 +335,12 @@ const ReceivedParcels: React.FC = () => {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => navigate(`/track-parcel/${parcel.trackingId}`)}
+                              onClick={() => {
+                                setSelectedParcelId(parcel._id as string)
+                                setOpen(true);
+                              }}
                             >
-                              <Eye className="w-4 h-4 mr-1" />
-                              View
+                              Change Status
                             </Button>
                           </div>
                         </div>
@@ -270,6 +359,18 @@ const ReceivedParcels: React.FC = () => {
                       key={parcel._id}
                       parcel={parcel}
                       user={parcel.sender as Person}
+                      actionButton={
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedParcelId(parcel._id as string);
+                            setOpen(true);
+                          }}
+                        >
+                          Change Status
+                        </Button>
+                      }
                     />
                   ))}
                 </div>

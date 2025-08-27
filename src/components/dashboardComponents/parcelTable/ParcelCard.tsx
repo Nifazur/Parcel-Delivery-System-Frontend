@@ -5,14 +5,16 @@ import type { IParcel, Parcel } from "@/types";
 import type { Person } from "@/types/parcel.type";
 
 import { Calendar, Eye, MapPin, User } from "lucide-react";
+import type { ReactNode } from "react";
 import { useNavigate } from "react-router";
 
 interface ParcelTableTrowProps {
   parcel: Parcel | IParcel;
-  user: Person
+  user: Person,
+  actionButton?: ReactNode;
 }
 
-const ParcelCard= ({ parcel, user }: ParcelTableTrowProps)  => {
+const ParcelCard= ({ parcel, user, actionButton }: ParcelTableTrowProps)  => {
   const navigate = useNavigate();
 
   const handleView = () => {
@@ -58,7 +60,10 @@ const ParcelCard= ({ parcel, user }: ParcelTableTrowProps)  => {
               <Calendar className="w-3 h-3" />
               {parcel.createdAt}
             </div>
-            <Button
+            {actionButton ? (
+              actionButton
+            ): (
+              <Button
               variant="outline"
               size="sm"
               onClick={handleView}
@@ -67,6 +72,7 @@ const ParcelCard= ({ parcel, user }: ParcelTableTrowProps)  => {
               <Eye className="w-3 h-3 mr-1" />
               View
             </Button>
+            )}
           </div>
         </div>
       </CardContent>

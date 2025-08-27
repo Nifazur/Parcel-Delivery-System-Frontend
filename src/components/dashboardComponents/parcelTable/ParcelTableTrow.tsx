@@ -4,14 +4,16 @@ import StatusBadge from "@/components/StatusBadge";
 import { useNavigate } from "react-router-dom";
 import type { IParcel, Parcel } from "@/types";
 import type { Person } from "@/types/parcel.type";
+import type { ReactNode } from "react";
 
 
 interface ParcelTableTrowProps {
   parcel: Parcel | IParcel;
   user: Person
+  actionButton?: ReactNode;
 }
 
-const ParcelTableTrow = ({ parcel, user }: ParcelTableTrowProps) => {
+const ParcelTableTrow = ({ parcel, user, actionButton }: ParcelTableTrowProps) => {
   const navigate = useNavigate();
 
   const handleView = () => {
@@ -62,10 +64,12 @@ const ParcelTableTrow = ({ parcel, user }: ParcelTableTrowProps) => {
 
         {/* Actions */}
         <td className="py-4 px-2">
-          <Button variant="outline" size="sm" onClick={handleView}>
+          {actionButton ? actionButton : (
+            <Button variant="outline" size="sm" onClick={handleView}>
             <Eye className="w-4 h-4 mr-1" />
             View
           </Button>
+          )}
         </td>
       </tr>
     </>
