@@ -7,6 +7,7 @@ import TrackingTimelineCard from '@/components/parcel/TrackingTimelineCard';
 import CurrentStatusCard from './component/CurrentStatusCard';
 import TrackingHeader from './component/TrackingHeader';
 import ErrorState from './component/ErrorState';
+import LoadingPage from '@/components/layout/loading';
 
 const Tracking = () => {
     const { id } = useParams();
@@ -14,8 +15,7 @@ const Tracking = () => {
 
     // Loading state
     if (isLoading) {
-        // return <LoadingState trackingId={id} />;
-        return <h1>loading</h1>
+        return <LoadingPage></LoadingPage>
     }
 
     // Error state

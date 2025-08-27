@@ -8,6 +8,7 @@ import PeopleInfoCard from "./component/PeopleInfoCard";
 import type { IParcelDetails } from "@/types/parcel.type";
 import TrackingHeader from "./component/TrackingHeader";
 import TrackingTimelineCard from "@/components/parcel/TrackingTimelineCard";
+import LoadingPage from "@/components/layout/loading";
 
 
 
@@ -18,7 +19,7 @@ const ParcelDetails = () => {
 
     // Loading state
     if (isLoading) {
-        return <h1>Loading...</h1>;
+        return <LoadingPage></LoadingPage>;
     }
 
     // Error state

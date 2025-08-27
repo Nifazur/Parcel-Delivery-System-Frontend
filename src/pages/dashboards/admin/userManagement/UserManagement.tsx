@@ -38,7 +38,6 @@ const UserManagementTable = () => {
 
   // Redux hooks
   const { data: usersResponse, isLoading, isError, error } = useGetAllUsersQuery();
-  const [updateUser, { isLoading: isUpdating,}] = useUpdateUserMutation();
 
   const users = usersResponse?.data || [];
 
@@ -61,39 +60,8 @@ const UserManagementTable = () => {
     }
   };
 
-  const toggleSensitiveInfo = (userId: string) => {
-    setShowSensitiveInfo(prev => ({
-      ...prev,
-      [userId]: !prev[userId]
-    }));
-  };
 
-  const handleEditUser = (user: IUser) => {
-    setSelectedUser(user);
-    setIsEditModalOpen(true);
-  };
 
-  const handleUpdateUser = async () => {
-    if (selectedUser) {
-      try {
-        await updateUser({
-          id: selectedUser._id,
-          data: {
-            name: selectedUser.name,
-            email: selectedUser.email,
-            phone: selectedUser.phone,
-            address: selectedUser.address,
-            isActive: selectedUser.isActive,
-            role: selectedUser.role
-          }
-        });
-        setIsEditModalOpen(false);
-        setSelectedUser(null);
-      } catch (error) {
-        console.error('Failed to update user:', error);
-      }
-    }
-  };
 
   if (isLoading) {
     return (
@@ -139,11 +107,9 @@ const UserManagementTable = () => {
             <thead className="bg-muted/50 border-b">
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">User</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Contact</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Roles</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Status</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Auth Provider</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -174,24 +140,7 @@ const UserManagementTable = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4">
-                    <div className="space-y-1">
-                      {user.phone && (
-                        <div className="flex items-center space-x-2">
-                          <Phone className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-foreground">
-                            {showSensitiveInfo[user._id] ? user.phone : '***-***-****'}
-                          </span>
-                        </div>
-                      )}
-                      {user.address && (
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-foreground">{user.address}</span>
-                        </div>
-                      )}
-                    </div>
-                  </td>
+                  
                   <td className="px-6 py-4">
                     <div className="flex flex-wrap gap-1">
                       {user.role.map((role) => (
@@ -223,28 +172,6 @@ const UserManagementTable = () => {
                       <span className="text-sm text-foreground capitalize">
                         {user.auths[0]?.provider}
                       </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => toggleSensitiveInfo(user._id)}
-                        className="p-2 rounded-md bg-secondary hover:bg-secondary/80 transition-colors"
-                        title={showSensitiveInfo[user._id] ? 'Hide sensitive info' : 'Show sensitive info'}
-                      >
-                        {showSensitiveInfo[user._id] ? (
-                          <EyeOff className="h-4 w-4 text-secondary-foreground" />
-                        ) : (
-                          <Eye className="h-4 w-4 text-secondary-foreground" />
-                        )}
-                      </button>
-                      <button
-                        onClick={() => handleEditUser(user)}
-                        className="p-2 rounded-md bg-primary hover:bg-primary/90 transition-colors"
-                        title="Edit user"
-                      >
-                        <Edit className="h-4 w-4 text-primary-foreground" />
-                      </button>
                     </div>
                   </td>
                 </tr>

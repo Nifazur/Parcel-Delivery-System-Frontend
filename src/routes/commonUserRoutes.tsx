@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import TrackingSearch from "@/pages/public/4.Tracking/TrackingSearch";
 import Profile from "@/components/dashboardComponents/Profile";
+import SenderDashboard from "@/pages/dashboards/sender/dashboard/SenderDashboard";
+import ReceiverDashboard from "@/pages/dashboards/receiver/dashboard/ReceiverDashboard";
 
 
 export const commonUserSidebarItems: ISidebarItem[] = [
@@ -27,9 +29,15 @@ export const commonUserSidebarItems: ISidebarItem[] = [
     title: "Dashboard",
     items: [
       {
-        title: "Overview",
-        url: "/common-user/dashboard",
-        component: UserDashboard,
+        title: "Sent Parcel Dashboard",
+        url: "/common-user/senderDashboard",
+        component: SenderDashboard,
+        icon: BarChart3,
+      },
+      {
+        title: "Received Parcel Dashboard",
+        url: "/common-user/receiverDashboard",
+        component: ReceiverDashboard,
         icon: BarChart3,
       },
     ],

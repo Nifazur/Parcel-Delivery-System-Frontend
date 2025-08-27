@@ -1,3 +1,4 @@
+import LoadingPage from "@/components/layout/loading";
 import { useUserInfoQuery } from "@/redux/features/authApi";
 import type { TRole } from "@/types";
 import type { ComponentType } from "react";
@@ -13,7 +14,7 @@ export const withAuth = (
 
     const user = data?.data;
     if (isLoading) {
-      return <div>Loading...</div>;
+      return <LoadingPage></LoadingPage>;
     }
 
     if (!user?.email) {

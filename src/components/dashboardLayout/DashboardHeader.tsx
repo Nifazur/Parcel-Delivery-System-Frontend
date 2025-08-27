@@ -10,6 +10,7 @@ import { NavLink, useNavigate } from 'react-router';
 import { role } from '@/constants/role';
 import { toast } from 'sonner';
 import { useAppDispatch } from '@/redux/hook';
+import LoadingPage from '../layout/loading';
 
 export function DashboardHeader() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export function DashboardHeader() {
     const { data, isLoading } = useUserInfoQuery(undefined);
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <LoadingPage></LoadingPage>;
     }
 
     const navLinks = [
