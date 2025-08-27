@@ -84,8 +84,8 @@ export interface IParcel {
   _id?: string;
   type: string;
   weight: number;
-  sender: string | IUser;
-  receiver: string | IUser;
+  sender: IUser;
+  receiver: string;
   fromAddress: string;
   toAddress: string;
   division: string | IDivision;
@@ -168,7 +168,6 @@ interface Receiver {
   _id: string;
   name: string;
   email: string;
-  phone: string;
 }
 
 interface StatusLog {

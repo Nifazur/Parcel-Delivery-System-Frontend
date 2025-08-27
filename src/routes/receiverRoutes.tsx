@@ -1,4 +1,4 @@
-import ReceiverProfile from "@/pages/dashboards/receiver/account/ReceiverProfile";
+import Profile from "@/components/dashboardComponents/Profile";
 import ReceiverDashboard from "@/pages/dashboards/receiver/dashboard/ReceiverDashboard";
 import CompletedDeliveries from "@/pages/dashboards/receiver/parcelManagement/CompletedDeliveries";
 import PendingDeliveries from "@/pages/dashboards/receiver/parcelManagement/PendingDeliveries";
@@ -63,7 +63,7 @@ export const receiverSidebarItems: ISidebarItem[] = [
       {
         title: "Profile",
         url: "/receiver/profile",
-        component: ReceiverProfile,
+        component: Profile,
         icon: User,
       },
     ],

@@ -1,4 +1,3 @@
-import SenderProfile from "@/pages/dashboards/sender/account/SenderProfile";
 import SenderDashboard from "@/pages/dashboards/sender/dashboard/SenderDashboard";
 import CancelledParcels from "@/pages/dashboards/sender/parcelManagement/CancelledParcels";
 import CreateParcel from "@/pages/dashboards/CreateParcel";
@@ -16,6 +15,7 @@ import {
   User,
   Plus
 } from "lucide-react";
+import Profile from "@/components/dashboardComponents/Profile";
 
 export const senderSidebarItems: ISidebarItem[] = [
   {
@@ -70,7 +70,7 @@ export const senderSidebarItems: ISidebarItem[] = [
       {
         title: "Profile",
         url: "/sender/profile",
-        component: SenderProfile,
+        component: Profile,
         icon: User,
       },
     ],

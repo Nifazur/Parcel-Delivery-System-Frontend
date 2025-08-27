@@ -1,12 +1,18 @@
 import StatusBadge from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { Parcel } from "@/types";
+import type { IParcel, Parcel } from "@/types";
+import type { Person } from "@/types/parcel.type";
 
 import { Calendar, Eye, MapPin, User } from "lucide-react";
 import { useNavigate } from "react-router";
 
-const ParcelCard: React.FC<{ parcel: Parcel }> = ({ parcel }) => {
+interface ParcelTableTrowProps {
+  parcel: Parcel | IParcel;
+  user: Person
+}
+
+const ParcelCard= ({ parcel, user }: ParcelTableTrowProps)  => {
   const navigate = useNavigate();
 
   const handleView = () => {
@@ -30,10 +36,10 @@ const ParcelCard: React.FC<{ parcel: Parcel }> = ({ parcel }) => {
             <User className="w-4 h-4 text-muted-foreground" />
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium truncate">
-                {parcel.receiver.name}
+                {user.name}
               </p>
               <p className="text-xs text-muted-foreground truncate">
-                {parcel.receiver.email}
+                {user.email}
               </p>
             </div>
           </div>

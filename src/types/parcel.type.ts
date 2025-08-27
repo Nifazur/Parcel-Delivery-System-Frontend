@@ -1,5 +1,6 @@
-// src/types/parcel.types.ts
-import type { IUser } from "./user.types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 
 export type ParcelStatus =
   | "requested"
@@ -17,25 +18,7 @@ export interface IStatusLog {
   note?: string;
 }
 
-export interface IParcel {
-  _id?: string;
-  type: string;
-  weight: number;
-  sender: string | IUser;
-  receiver: string | IUser;
-  fromAddress: string;
-  toAddress: string;
-  division: string;
-  deliveryDate?: string;
-  fee: number;
-  trackingId: string;
-  status: ParcelStatus;
-  statusLogs: IStatusLog[];
-  isBlocked?: boolean;
-  isCancelled?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-}
+
 
 // For API response (from backend)
 export interface Parcel {
@@ -47,7 +30,6 @@ export interface Parcel {
     _id: string;
     name: string;
     email: string;
-    phone: string;
   };
   fromAddress: string;
   toAddress: string;

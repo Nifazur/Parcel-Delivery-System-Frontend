@@ -1,3 +1,4 @@
+import Profile from "@/components/dashboardComponents/Profile";
 import AdminDashboard from "@/pages/dashboards/admin/dashboard/AdminDashboard";
 import Analytics from "@/pages/dashboards/admin/dashboard/Analytics";
 import ParcelStatistics from "@/pages/dashboards/admin/dashboard/ParcelStatistics";
@@ -14,7 +15,8 @@ import {
   MapPin, 
   TrendingUp,
   UserCheck,
-  PieChart
+  PieChart,
+  User
 } from "lucide-react";
 
 export const adminSidebarItems: ISidebarItem[] = [
@@ -83,6 +85,17 @@ export const adminSidebarItems: ISidebarItem[] = [
         url: "/admin/add-division",
         component: AddDivision,
         icon: MapPin,
+      },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      {
+        title: "Profile",
+        url: "/admin/profile",
+        component: Profile,
+        icon: User,
       },
     ],
   },

@@ -192,6 +192,7 @@ const DeliveredParcels: React.FC = () => {
                                                     <ParcelTableTrow
                                                         key={parcel._id}
                                                         parcel={parcel}
+                                                        user={parcel.receiver}
                                                     />
                                                 ))}
                                             </tbody>
@@ -251,6 +252,7 @@ const DeliveredParcels: React.FC = () => {
                                         <ParcelCard 
                                             key={parcel._id} 
                                             parcel={parcel}
+                                            user={parcel.receiver}
                                         />
                                     ))}
                                 </div>

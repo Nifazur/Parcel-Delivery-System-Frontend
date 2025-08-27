@@ -213,6 +213,7 @@ const SentParcels: React.FC = () => {
                                                     <ParcelTableTrow
                                                         key={parcel._id}
                                                         parcel={parcel}
+                                                        user={parcel.receiver}
                                                     />
                                                 ))}
                                             </tbody>
@@ -258,7 +259,7 @@ const SentParcels: React.FC = () => {
                                 {/* Mobile Card View */}
                                 <div className="md:hidden">
                                     {filteredAndSortedParcels.map((parcel) => (
-                                        <ParcelCard key={parcel._id} parcel={parcel} />
+                                        <ParcelCard key={parcel._id} parcel={parcel} user={parcel.receiver} />
                                     ))}
                                 </div>
                             </div>

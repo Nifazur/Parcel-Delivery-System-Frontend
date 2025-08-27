@@ -205,6 +205,7 @@ const CancelledParcels: React.FC = () => {
                                                     <ParcelTableTrow
                                                         key={parcel._id}
                                                         parcel={parcel}
+                                                        user={parcel.receiver}
                                                     />
                                                 ))}
                                             </tbody>
@@ -264,6 +265,7 @@ const CancelledParcels: React.FC = () => {
                                         <ParcelCard 
                                             key={parcel._id} 
                                             parcel={parcel}
+                                            user={parcel.receiver}
                                         />
                                     ))}
                                 </div>

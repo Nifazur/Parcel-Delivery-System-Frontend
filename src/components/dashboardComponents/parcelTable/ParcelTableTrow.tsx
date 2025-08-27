@@ -2,22 +2,21 @@ import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/StatusBadge";
 import { useNavigate } from "react-router-dom";
-import type { Parcel } from "@/types";
+import type { IParcel, Parcel } from "@/types";
+import type { Person } from "@/types/parcel.type";
 
 
 interface ParcelTableTrowProps {
-  parcel: Parcel;
+  parcel: Parcel | IParcel;
+  user: Person
 }
 
-const ParcelTableTrow = ({ parcel }: ParcelTableTrowProps) => {
+const ParcelTableTrow = ({ parcel, user }: ParcelTableTrowProps) => {
   const navigate = useNavigate();
 
   const handleView = () => {
-    navigate(`/parcel-details/${parcel._id}`);
+    navigate(`/parcel-details/${parcel.trackingId}`);
   };
-
-  console.log(parcel);
-  
 
   return (
     <>
@@ -33,9 +32,8 @@ const ParcelTableTrow = ({ parcel }: ParcelTableTrowProps) => {
         {/* Receiver */}
         <td className="py-4 px-2">
           <div>
-            <p className="font-medium text-sm">{parcel.receiver.name}</p>
-            <p className="text-xs text-muted-foreground">{parcel.receiver.email}</p>
-            <p className="text-xs text-muted-foreground">{parcel.receiver.phone}</p>
+            <p className="font-medium text-sm">{user.name ?? "N/A"}</p>
+            <p className="text-xs text-muted-foreground">{user.email ?? "N/A"}</p>
           </div>
         </td>
 
@@ -54,7 +52,7 @@ const ParcelTableTrow = ({ parcel }: ParcelTableTrowProps) => {
         {/* Created Date */}
         <td className="py-4 px-2">
           <p className="text-sm">
-            {new Date(parcel.createdAt).toLocaleDateString("en-US", {
+            {new Date(parcel.createdAt as string).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
               day: "numeric",

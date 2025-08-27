@@ -1,23 +1,24 @@
-import { Bell, HelpCircle, Home, MapPin, Menu } from 'lucide-react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Bell, HelpCircle, Home, LucideLogOut, MapPin, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useUserInfoQuery } from '@/redux/features/authApi';
+import { authApi, useLogoutMutation, useUserInfoQuery } from '@/redux/features/authApi';
 import { ModeToggle } from '../layout/ModeToggler';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { NavLink } from 'react-router';
-
-
+import { NavLink, useNavigate } from 'react-router';
+import { role } from '@/constants/role';
+import { toast } from 'sonner';
+import { useAppDispatch } from '@/redux/hook';
 
 export function DashboardHeader() {
-
-
-
-
-    const { data, isLoading } = useUserInfoQuery(undefined)
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const [logout] = useLogoutMutation();
+    const { data, isLoading } = useUserInfoQuery(undefined);
 
     if (isLoading) {
-        <p>Loading...</p>
+        return <p>Loading...</p>;
     }
 
     const navLinks = [
@@ -26,10 +27,36 @@ export function DashboardHeader() {
         { name: "Contact", path: "/contact", icon: MapPin },
     ];
 
-    const userName = data?.data?.name?.split(" ")[0];
-    const profile = data?.data?.picture;
-    console.log(profile);
-    
+    const user = data?.data;
+    const userName = user?.name?.split(" ")[0];
+    let profile = user?.picture;
+
+
+    if (profile) {
+        profile = profile.replace(/=[^/]+$/, "");
+    }
+
+    const getInitials = (fullName?: string) => {
+        if (!fullName) return "UN";
+        return fullName
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase();
+    };
+
+    const handleLogout = async () => {
+        try {
+            const res = await logout(undefined).unwrap();
+            if (res.success) {
+                toast.success("Logged out successfully!");
+            }
+            dispatch(authApi.util.resetApiState());
+        } catch (err: any) {
+            toast.error(err?.data?.message || "Logout failed!");
+        }
+    };
+
 
     return (
         <div className="flex flex-1 items-center justify-between">
@@ -65,13 +92,46 @@ export function DashboardHeader() {
                                     </NavLink>
                                 </DropdownMenuItem>
                             ))}
+                            <DropdownMenuItem asChild className='w-full'>
+                                <button onClick={handleLogout}>
+                                    <LucideLogOut className="w-4 h-4" />
+                                    Sign Out
+                                </button>
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <Avatar>
-                    {profile ? <AvatarImage src={profile} /> :
-                    <AvatarFallback>UN</AvatarFallback>}
-                </Avatar>
+
+                <button
+                    onClick={() => {
+                        if (user?.role?.includes(role.sender) && user?.role?.includes(role.receiver)) {
+                            navigate("/common-user/profile");
+                        } else if (user?.role?.includes(role.sender)) {
+                            navigate("/sender/profile");
+                        } else if (user?.role?.includes(role.receiver)) {
+                            navigate("/receiver/profile");
+                        } else if (
+                            user?.role?.includes(role.admin) ||
+                            user?.role?.includes(role.superAdmin)
+                        ) {
+                            navigate("/admin/profile");
+                        } else {
+                            navigate("/");
+                        }
+                    }}
+                >
+                    <Avatar>
+                        {profile ? (
+                            <AvatarImage
+                                src={profile}
+                                alt={userName ?? "User profile"}
+                                referrerPolicy="no-referrer"
+                            />
+                        ) : (
+                            <AvatarFallback>{getInitials(userName)}</AvatarFallback>
+                        )}
+                    </Avatar>
+                </button>
             </div>
         </div>
     );

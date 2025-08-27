@@ -183,6 +183,7 @@ const PendingParcels: React.FC = () => {
                                                     <ParcelTableTrow
                                                         key={parcel._id}
                                                         parcel={parcel}
+                                                        user={parcel.receiver}
                                                     />
                                                 ))}
                                             </tbody>
@@ -239,6 +240,7 @@ const PendingParcels: React.FC = () => {
                                         <ParcelCard 
                                             key={parcel._id} 
                                             parcel={parcel}
+                                            user={parcel.receiver}
                                         />
                                     ))}
                                 </div>

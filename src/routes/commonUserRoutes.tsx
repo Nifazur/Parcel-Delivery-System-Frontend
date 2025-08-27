@@ -1,8 +1,5 @@
-import ParcelHistory from "@/pages/dashboards/commonUser/account/ParcelHistory";
-import UserProfile from "@/pages/dashboards/commonUser/account/UserProfile";
 import UserDashboard from "@/pages/dashboards/commonUser/dashboard/UserDashboard";
 import ReceivedParcels from "@/pages/dashboards/receiver/parcelManagement/ReceivedParcels";
-import TrackParcel from "@/pages/dashboards/receiver/parcelManagement/TrackParcel";
 import CancelledParcels from "@/pages/dashboards/sender/parcelManagement/CancelledParcels";
 import CreateParcel from "@/pages/dashboards/CreateParcel";
 import DeliveredParcels from "@/pages/dashboards/sender/parcelManagement/DeliveredParcels";
@@ -20,8 +17,9 @@ import {
   Search,
   BarChart3,
   User,
-  History
 } from "lucide-react";
+import TrackingSearch from "@/pages/public/4.Tracking/TrackingSearch";
+import Profile from "@/components/dashboardComponents/Profile";
 
 
 export const commonUserSidebarItems: ISidebarItem[] = [
@@ -59,7 +57,7 @@ export const commonUserSidebarItems: ISidebarItem[] = [
       {
         title: "Track Parcel",
         url: "/common-user/track-parcel",
-        component: TrackParcel,
+        component: TrackingSearch,
         icon: Search,
       },
       {
@@ -97,15 +95,9 @@ export const commonUserSidebarItems: ISidebarItem[] = [
     title: "Account",
     items: [
       {
-        title: "History",
-        url: "/common-user/history",
-        component: ParcelHistory,
-        icon: History,
-      },
-      {
         title: "Profile",
         url: "/common-user/profile",
-        component: UserProfile,
+        component: Profile,
         icon: User,
       },
     ],

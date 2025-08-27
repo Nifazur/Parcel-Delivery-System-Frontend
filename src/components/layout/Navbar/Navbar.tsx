@@ -106,8 +106,12 @@ const Navbar = () => {
                                         }`
                                     }
                                 >
-                                    <dashboardLink.icon className="h-4 w-4 mr-2" />
-                                    {dashboardLink.name}
+                                    {!isLoading && (
+                                        <>
+                                            <dashboardLink.icon className="h-4 w-4 mr-2" />
+                                            {dashboardLink.name}
+                                        </>
+                                    )}
                                 </NavLink>
                             )}
                         </div>
