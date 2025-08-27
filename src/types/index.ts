@@ -25,19 +25,21 @@ export interface IResponse<T> {
 }
 
 // User related types
-export enum Role {
-  SUPER_ADMIN = "SUPER_ADMIN",
-  ADMIN = "ADMIN",
-  USER = "USER",
-  SENDER = "SENDER",
-  RECEIVER = "RECEIVER"
-}
+export const Role = {
+  SUPER_ADMIN: "SUPER_ADMIN",
+  ADMIN: "ADMIN",
+  USER: "USER",
+  SENDER: "SENDER",
+  RECEIVER: "RECEIVER"
+} as const;
+export type Role = typeof Role[keyof typeof Role];
 
-export enum IsActive {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-  BLOCKED = "BLOCKED"
-}
+export const IsActive = {
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+  BLOCKED: "BLOCKED"
+} as const;
+export type IsActive = typeof IsActive[keyof typeof IsActive];
 
 export interface IAuthProvider {
   provider: string;

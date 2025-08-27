@@ -1,4 +1,4 @@
-import LoadingPage from "@/components/layout/loading";
+import LoadingPage from "@/components/layout/LoadingPage";
 import { useUserInfoQuery } from "@/redux/features/authApi";
 import type { TRole } from "@/types";
 import type { ComponentType } from "react";

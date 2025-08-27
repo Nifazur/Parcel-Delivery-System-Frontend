@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { useGetMySentParcelsQuery } from '@/redux/features/parcelApi';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
-import ParcelTableHeader from '@/components/dashboardComponents/parcelTable/parcelTableHeader';
+import ParcelTableHeader from '@/components/dashboardComponents/parcelTable/ParcelTableHeader';
 import ParcelTableTrow from '@/components/dashboardComponents/parcelTable/ParcelTableTrow';
 import ParcelTableThead from '@/components/dashboardComponents/parcelTable/ParcelTableThead';
 import StatusBadge from '@/components/StatusBadge';

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
 
 interface Review {
@@ -77,32 +76,32 @@ const Review: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLDivElement>(null);
 
-    // GSAP-style scroll animation
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsVisible(true);
-                    }
-                });
-            },
-            {
-                threshold: 0.1,
-                rootMargin: "50px",
-            }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
         }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "50px",
+    }
+  );
 
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
-        };
-    }, []);
+  const element = sectionRef.current; // copy ref value
+  if (element) {
+    observer.observe(element);
+  }
+
+  return () => {
+    if (element) {
+      observer.unobserve(element);
+    }
+  };
+}, []);
 
     // Carousel API setup
     useEffect(() => {

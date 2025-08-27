@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from 'react-router';
 import { role } from '@/constants/role';
 import { toast } from 'sonner';
 import { useAppDispatch } from '@/redux/hook';
-import LoadingPage from '../layout/loading';
+import LoadingPage from '../layout/LoadingPage';
 
 export function DashboardHeader() {
     const navigate = useNavigate();

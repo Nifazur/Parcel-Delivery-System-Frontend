@@ -1,4 +1,3 @@
-import UserDashboard from "@/pages/dashboards/commonUser/dashboard/UserDashboard";
 import ReceivedParcels from "@/pages/dashboards/receiver/parcelManagement/ReceivedParcels";
 import CancelledParcels from "@/pages/dashboards/sender/parcelManagement/CancelledParcels";
 import CreateParcel from "@/pages/dashboards/CreateParcel";

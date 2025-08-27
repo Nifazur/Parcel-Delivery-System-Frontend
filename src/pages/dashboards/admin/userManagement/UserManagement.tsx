@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Edit, User, Mail, Phone, MapPin, Shield, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
-import { useGetAllUsersQuery, useUpdateUserMutation } from '@/redux/features/userApi';
+import { useState } from 'react';
+import { Shield,Loader2, AlertCircle, User } from 'lucide-react';
+import { useGetAllUsersQuery } from '@/redux/features/userApi';
 
 // Interface definitions
 interface IUser {
@@ -19,25 +19,15 @@ interface IUser {
   }>;
 }
 
-interface IResponse<T> {
-  statusCode: number;
-  success: boolean;
-  message: string;
-  meta: {
-    total: number;
-  };
-  data: T;
-}
 
 
 
 const UserManagementTable = () => {
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [showSensitiveInfo, setShowSensitiveInfo] = useState<Record<string, boolean>>({});
 
   // Redux hooks
-  const { data: usersResponse, isLoading, isError, error } = useGetAllUsersQuery();
+  const { data: usersResponse, isLoading, isError } = useGetAllUsersQuery();
 
   const users = usersResponse?.data || [];
 
@@ -81,7 +71,7 @@ const UserManagementTable = () => {
           <AlertCircle className="h-8 w-8 text-destructive" />
           <p className="text-destructive font-medium">Failed to load users</p>
           <p className="text-muted-foreground text-sm">
-            {error?.message || 'Something went wrong'}
+            'Something went wrong'
           </p>
         </div>
       </div>
@@ -95,7 +85,7 @@ const UserManagementTable = () => {
         <div>
           <h1 className="text-2xl font-bold text-foreground">User Management</h1>
           <p className="text-muted-foreground">
-            Total {usersResponse?.meta.total || 0} users found
+            Total {usersResponse?.meta?.total || 0} users found
           </p>
         </div>
       </div>
@@ -209,43 +199,9 @@ const UserManagementTable = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => toggleSensitiveInfo(user._id)}
-                  className="p-2 rounded-md bg-secondary hover:bg-secondary/80 transition-colors"
-                >
-                  {showSensitiveInfo[user._id] ? (
-                    <EyeOff className="h-4 w-4 text-secondary-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-secondary-foreground" />
-                  )}
-                </button>
-                <button
-                  onClick={() => handleEditUser(user)}
-                  className="p-2 rounded-md bg-primary hover:bg-primary/90 transition-colors"
-                >
-                  <Edit className="h-4 w-4 text-primary-foreground" />
-                </button>
-              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <div className="space-y-2">
-                {user.phone && (
-                  <div className="flex items-center space-x-2">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-foreground">
-                      {showSensitiveInfo[user._id] ? user.phone : '***-***-****'}
-                    </span>
-                  </div>
-                )}
-                {user.address && (
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-foreground">{user.address}</span>
-                  </div>
-                )}
-              </div>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Shield className="h-4 w-4 text-muted-foreground" />
@@ -378,23 +334,6 @@ const UserManagementTable = () => {
                     <option value="INACTIVE">Inactive</option>
                   </select>
                 </div>
-              </div>
-              
-              <div className="flex space-x-3 pt-4">
-                <button
-                  onClick={() => setIsEditModalOpen(false)}
-                  className="flex-1 px-4 py-2 border border-input rounded-md text-foreground hover:bg-secondary transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUpdateUser}
-                  disabled={isUpdating}
-                  className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                >
-                  {isUpdating && <Loader2 className="h-4 w-4 animate-spin" />}
-                  <span>{isUpdating ? 'Updating...' : 'Update'}</span>
-                </button>
               </div>
             </div>
           </div>

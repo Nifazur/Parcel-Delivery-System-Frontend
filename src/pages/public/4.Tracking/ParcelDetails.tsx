@@ -8,7 +8,7 @@ import PeopleInfoCard from "./component/PeopleInfoCard";
 import type { IParcelDetails } from "@/types/parcel.type";
 import TrackingHeader from "./component/TrackingHeader";
 import TrackingTimelineCard from "@/components/parcel/TrackingTimelineCard";
-import LoadingPage from "@/components/layout/loading";
+import LoadingPage from "@/components/layout/LoadingPage";
 
 
 
