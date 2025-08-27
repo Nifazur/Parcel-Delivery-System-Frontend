@@ -6,11 +6,7 @@ import {
     CheckCircle,
     TrendingUp,
     Eye,
-    Search,
-    Bell,
     Truck,
-    AlertCircle,
-    Calendar,
     MapPin,
     User,
     DollarSign,
@@ -20,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useGetMySentParcelsQuery, useGetParcelStatisticsQuery } from '@/redux/features/parcelApi';
+import { useGetMySentParcelsQuery } from '@/redux/features/parcelApi';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
 import StatusBadge from '@/components/StatusBadge';
@@ -31,7 +27,6 @@ const SenderDashboard: React.FC = () => {
     
     // API calls
     const { data: parcelsData, isLoading: parcelsLoading, refetch } = useGetMySentParcelsQuery(undefined);
-    const { data: statsData, isLoading: statsLoading } = useGetParcelStatisticsQuery(undefined);
     
     const parcels: Parcel[] = useMemo(() => {
         return parcelsData?.data || [];

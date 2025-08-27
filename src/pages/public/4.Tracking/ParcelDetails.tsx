@@ -1,7 +1,7 @@
 import ErrorState from "./component/ErrorState";
 import CurrentStatusCard from "./component/CurrentStatusCard";
 import AddressesCard from "./component/AddressCard";
-import ParcelInfoCard from "./component/ParcelinfoCard";
+import ParcelInfoCard from "./component/ParcelInfoCard";
 import { useGetParcelByIdQuery } from "@/redux/features/parcelApi";
 import { useParams } from "react-router";
 import PeopleInfoCard from "./component/PeopleInfoCard";
