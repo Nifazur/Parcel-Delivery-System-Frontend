@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from "react";
-import Joyride, { type Step } from "react-joyride";
+import Joyride, { STATUS, type CallBackProps, type Step } from "react-joyride";
 
 import Hero from "./section/Hero";
 import OurSpecialties from "./section/OurSpecialties";
@@ -103,6 +103,12 @@ const Home = () => {
             ),
         },
     ]
+    const handleJoyrideCallback = (data: CallBackProps) => {
+        const { status } = data;
+        if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    };
 
     return (
         <div>
@@ -113,8 +119,9 @@ const Home = () => {
                 showProgress
                 showSkipButton
                 scrollToFirstStep
-                scrollOffset={100}
+                scrollOffset={200}
                 spotlightPadding={10}
+                callback={handleJoyrideCallback}
                 styles={{
                     options: {
                         zIndex: 99999,
