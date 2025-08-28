@@ -40,40 +40,40 @@ const Step = () => {
   ];
 
 
-    const containerRef = useRef(null);
+  const containerRef = useRef(null);
 
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            const items = gsap.utils.toArray('.step-item');
-            gsap.from(items, {
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse',
-                },
-            });
-        }, containerRef);
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const items = gsap.utils.toArray('.step-item');
+      gsap.from(items, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    }, containerRef);
 
-        return () => ctx.revert();
-    }, []);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
-    ref={containerRef} 
-    className="py-16 md:py-24 bg-background"
+      ref={containerRef}
+      className="py-16 md:py-24 bg-background"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header Section */}
         <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              HOW Fast box works
-            </h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+            HOW Fast box works
+          </h2>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-5">
             Discover how our platform works step by step, making booking, packing, and delivery simple and reliable.
@@ -85,14 +85,14 @@ const Step = () => {
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             return (
-              <div key={index} className="text-center step-item">
-                
+              <div key={index} className="text-center step-item" id={`step-${index}`}>
+
                 {/* Icon Container */}
-                <div className="relative mb-6">
+                <div className="relative mb-6" >
                   <div className={`w-20 h-20 md:w-24 md:h-24 ${step.color} rounded-2xl mx-auto flex items-center justify-center shadow-lg`}>
                     <IconComponent className="w-10 h-10 md:w-12 md:h-12 text-primary-foreground" />
                   </div>
-                  
+
                   {/* Connecting Line - Hidden on last item and mobile */}
                   {index < steps.length - 1 && (
                     <div className="hidden lg:block absolute top-10 md:top-12 left-20 md:left-24 w-full h-0.5 bg-muted-foreground/20 -z-10">

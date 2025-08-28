@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
                 Component: withAuth(DashboardLayout, [role.sender as TRole, role.receiver as TRole]),
                 path: "/common-user",
                 children: [
-                    { index: true, element: <Navigate to="dashboard" /> },
+                    { index: true, element: <Navigate to="senderDashboard" /> },
                     ...generateRoutes(commonUserSidebarItems),
                 ],
             },

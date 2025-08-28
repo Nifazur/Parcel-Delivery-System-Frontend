@@ -48,7 +48,7 @@ export const parcelApi = baseApi.injectEndpoints({
     }),
     
     getAllParcels: builder.query<
-      IResponse<{ parcels: IParcel[]; total: number; page: number; pages: number }>,
+      IResponse<{ parcels: IParcelDetails[]; total: number; page: number; pages: number }>,
       { page?: number; limit?: number; status?: ParcelStatus }
     >({
       query: ({ page = 1, limit = 10, status }) => ({

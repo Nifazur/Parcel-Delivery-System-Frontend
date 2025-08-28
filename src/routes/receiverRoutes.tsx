@@ -3,7 +3,7 @@ import ReceiverDashboard from "@/pages/dashboards/receiver/dashboard/ReceiverDas
 import CompletedDeliveries from "@/pages/dashboards/receiver/parcelManagement/CompletedDeliveries";
 import PendingDeliveries from "@/pages/dashboards/receiver/parcelManagement/PendingDeliveries";
 import ReceivedParcels from "@/pages/dashboards/receiver/parcelManagement/ReceivedParcels";
-import TrackParcel from "@/pages/dashboards/receiver/parcelManagement/TrackParcel";
+import TrackingSearch from "@/pages/public/4.Tracking/TrackingSearch";
 import type { ISidebarItem } from "@/types";
 
 
@@ -34,7 +34,7 @@ export const receiverSidebarItems: ISidebarItem[] = [
       {
         title: "Track Parcel",
         url: "/receiver/track-parcel",
-        component: TrackParcel,
+        component: TrackingSearch,
         icon: Search,
       },
       {

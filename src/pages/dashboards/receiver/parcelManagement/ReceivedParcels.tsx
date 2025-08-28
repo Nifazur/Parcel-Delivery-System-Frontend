@@ -1,15 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import {
-    Send,
-    Download,
-    Package,
-    CheckCircle,
-    XCircle,
-    Clock,
-    RefreshCw,
-    Plus,
-    Eye
-} from 'lucide-react';
+import { Send,Download,Package,CheckCircle,XCircle,Clock,RefreshCw,Plus,Eye} from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useGetMyReceivedParcelsQuery} from '@/redux/features/parcelApi';
@@ -110,7 +100,7 @@ const ReceivedParcels: React.FC = () => {
                     <div>
                         <h1 className="text-2xl sm:text-3xl font-bold text-primary flex items-center gap-2">
                             <Send className="w-6 h-6" />
-                            All Sent Parcels
+                            All Received Parcels
                         </h1>
                         <p className="text-muted-foreground text-sm sm:text-base">
                             Manage and track all your sent parcels in one place
@@ -203,7 +193,7 @@ const ReceivedParcels: React.FC = () => {
                                             <ParcelTableThead
                                                 columns={[
                                                     { key: "trackingId", label: "Tracking ID" },
-                                                    { key: "receiver", label: "Receiver" },
+                                                    { key: "sender", label: "Sender" },
                                                     { key: "destination", label: "Destination" },
                                                     { key: "status", label: "Status" },
                                                     { key: "created", label: "Created" },

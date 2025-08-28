@@ -114,6 +114,7 @@ const Pricing: React.FC = () => {
                     {pricingPlans.map((plan, index) => (
                         <Card
                             key={plan.id}
+                            id={plan.id}
                             className={`relative bg-card hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 transform ${isVisible
                                     ? 'opacity-100 translate-y-0'
                                     : 'opacity-0 translate-y-12'

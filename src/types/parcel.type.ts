@@ -63,11 +63,11 @@ export interface IParcelDetails {
     division: string;
     deliveryDate: string;
     fee: number;
-    status: string;
+    status: ParcelStatus;
     isBlocked: boolean;
     isCancelled: boolean;
     statusLogs: any[];
-    createdAt: Date;
+    createdAt: string;
     updatedAt: string;
     trackingId: string;
     __v?: number;

@@ -41,39 +41,49 @@ const AdminDashboard: React.FC = () => {
     const chartConfig = {
         revenue: {
             label: "Revenue",
-            color: "hsl(var(--chart-1))",
+            color: "#3b82f6", // Fixed blue color
         },
         count: {
             label: "Count",
-            color: "hsl(var(--chart-2))",
+            color: "#10b981", // Fixed green color
         },
     };
 
     const pieChartConfig = {
         delivered: {
             label: "Delivered",
-            color: "hsl(var(--chart-1))",
+            color: "#10b981", // Green
         },
-        inTransit: {
+        in_transit: {
             label: "In Transit",
-            color: "hsl(var(--chart-2))",
+            color: "#f59e0b", // Yellow
         },
-        pending: {
-            label: "Pending",
-            color: "hsl(var(--chart-3))",
+        requested: {
+            label: "Requested",
+            color: "#6b7280", // Gray
+        },
+        approved: {
+            label: "Approved",
+            color: "#3b82f6", // Blue
+        },
+        dispatched: {
+            label: "Dispatched",
+            color: "#8b5cf6", // Purple
         },
         cancelled: {
             label: "Cancelled",
-            color: "hsl(var(--chart-4))",
+            color: "#ef4444", // Red
         },
     };
 
+    // Fixed colors array with proper hex values
     const COLORS = [
-        "hsl(var(--chart-1))",
-        "hsl(var(--chart-2))",
-        "hsl(var(--chart-3))",
-        "hsl(var(--chart-4))",
-        "hsl(var(--chart-5))",
+        "#10b981", // Green - for delivered
+        "#f59e0b", // Yellow - for in transit
+        "#3b82f6", // Blue - for approved
+        "#6b7280", // Gray - for requested
+        "#8b5cf6", // Purple - for dispatched
+        "#ef4444", // Red - for cancelled
     ];
 
     const getStatusBadge = (status: string) => {
@@ -124,7 +134,7 @@ const AdminDashboard: React.FC = () => {
                             <DollarSign className="h-5 w-5 text-primary" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-foreground">${stats?.totalRevenue?.toLocaleString()}</div>
+                            <div className="text-2xl font-bold text-foreground">৳{stats?.totalRevenue?.toLocaleString()}</div>
                             <p className="text-xs text-muted-foreground mt-1">
                                 <TrendingUp className="h-3 w-3 inline mr-1" />
                                 Total revenue earned
@@ -167,7 +177,7 @@ const AdminDashboard: React.FC = () => {
                     <Card className="lg:col-span-2 border border-border bg-card">
                         <CardHeader>
                             <CardTitle className="text-card-foreground">Revenue by Status</CardTitle>
-                            <p className="text-sm text-muted-foreground">Monthly revenue breakdown</p>
+                            <p className="text-sm text-muted-foreground">Revenue breakdown by parcel status</p>
                         </CardHeader>
                         <CardContent>
                             <ChartContainer config={chartConfig} className="h-[300px] w-full">
@@ -177,18 +187,20 @@ const AdminDashboard: React.FC = () => {
                                         tickLine={false}
                                         axisLine={false}
                                         className="text-muted-foreground"
+                                        tick={{ fill: 'hsl(var(--muted-foreground))' }}
                                     />
                                     <YAxis
                                         tickLine={false}
                                         axisLine={false}
                                         className="text-muted-foreground"
+                                        tick={{ fill: 'hsl(var(--muted-foreground))' }}
                                     />
                                     <ChartTooltip
                                         content={
                                             <ChartTooltipContent
                                                 labelFormatter={(label) => `Status: ${label}`}
                                                 formatter={(value, name) => [
-                                                    `$${value.toLocaleString()}`,
+                                                    `৳${value.toLocaleString()}`,
                                                     name === 'revenue' ? 'Revenue' : 'Count'
                                                 ]}
                                             />
@@ -196,7 +208,7 @@ const AdminDashboard: React.FC = () => {
                                     />
                                     <Bar
                                         dataKey="revenue"
-                                        fill="var(--color-revenue)"
+                                        fill="#74946b"
                                         radius={[4, 4, 0, 0]}
                                     />
                                 </BarChart>
@@ -221,12 +233,27 @@ const AdminDashboard: React.FC = () => {
                                         dataKey="value"
                                         nameKey="name"
                                     >
-                                        {pieData?.map((_entry, index) => (
-                                            <Cell
-                                                key={`cell-${index}`}
-                                                fill={COLORS[index % COLORS.length]}
-                                            />
-                                        ))}
+                                        {pieData?.map((entry, index) => {
+                                            // Map status to specific colors
+                                            const getColorForStatus = (status: string) => {
+                                                switch (status) {
+                                                    case 'delivered': return "#b0b856"; // Green
+                                                    case 'in_transit': return "#4d4d78"; // Yellow
+                                                    case 'approved': return "#5f7590"; // Blue
+                                                    case 'requested': return "#74946b"; // Gray
+                                                    case 'dispatched': return "#8b5cf6"; // Purple
+                                                    case 'cancelled': return "#a49c47"; // Red
+                                                    default: return COLORS[index % COLORS.length];
+                                                }
+                                            };
+                                            
+                                            return (
+                                                <Cell
+                                                    key={`cell-${index}`}
+                                                    fill={getColorForStatus(entry.name)}
+                                                />
+                                            );
+                                        })}
                                     </Pie>
                                     <ChartTooltip
                                         content={
@@ -243,17 +270,31 @@ const AdminDashboard: React.FC = () => {
 
                             {/* Legend */}
                             <div className="flex flex-wrap justify-center gap-3 mt-4">
-                                {pieData?.map((entry, index) => (
-                                    <div key={entry.name} className="flex items-center gap-2">
-                                        <div
-                                            className="w-3 h-3 rounded-full"
-                                            style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                                        />
-                                        <span className="text-sm text-muted-foreground">
-                                            {entry.name}: {entry.value}
-                                        </span>
-                                    </div>
-                                ))}
+                                {pieData?.map((entry, index) => {
+                                    const getColorForStatus = (status: string) => {
+                                        switch (status) {
+                                            case 'delivered': return "#10b981"; // Green
+                                            case 'in_transit': return "#f59e0b"; // Yellow
+                                            case 'approved': return "#3b82f6"; // Blue
+                                            case 'requested': return "#6b7280"; // Gray
+                                            case 'dispatched': return "#8b5cf6"; // Purple
+                                            case 'cancelled': return "#ef4444"; // Red
+                                            default: return COLORS[index % COLORS.length];
+                                        }
+                                    };
+
+                                    return (
+                                        <div key={entry.name} className="flex items-center gap-2">
+                                            <div
+                                                className="w-3 h-3 rounded-full"
+                                                style={{ backgroundColor: getColorForStatus(entry.name) }}
+                                            />
+                                            <span className="text-sm text-muted-foreground capitalize">
+                                                {entry.name.replace('_', ' ')}: {entry.value}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </CardContent>
                     </Card>
@@ -289,9 +330,9 @@ const AdminDashboard: React.FC = () => {
                                                 <td className="p-4 font-mono text-sm text-foreground">{p.trackingId}</td>
                                                 <td className="p-4 text-foreground capitalize">{p.type}</td>
                                                 <td className="p-4 text-foreground">{p.sender?.name || 'N/A'}</td>
-                                                <td className="p-4 text-foreground">{'N/A'}</td>
+                                                <td className="p-4 text-foreground">{p.receiver?.name || 'N/A'}</td>
                                                 <td className="p-4">{getStatusBadge(p.status)}</td>
-                                                <td className="p-4 font-semibold text-foreground">${p.fee}</td>
+                                                <td className="p-4 font-semibold text-foreground">৳{p.fee}</td>
                                             </tr>
                                         ))}
                                         {parcels.length === 0 && (

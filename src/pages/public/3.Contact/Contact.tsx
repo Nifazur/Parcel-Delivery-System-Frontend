@@ -69,7 +69,7 @@ const ContactUsPage: React.FC = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto mb-15 p-5">
             {/* Header Section */}
             <div className="text-center mb-8">
                 <h1 className="text-4xl font-bold text-foreground mb-4">
@@ -81,7 +81,7 @@ const ContactUsPage: React.FC = () => {
             </div>
 
             {/* Contact Info Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-5">
                 <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm">
                     <CardContent className="p-6 text-center">
                         <Mail className="w-8 h-8 text-primary mx-auto mb-3" />

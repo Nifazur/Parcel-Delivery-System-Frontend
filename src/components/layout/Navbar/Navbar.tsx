@@ -53,7 +53,7 @@ const Navbar = () => {
     if (user?.role?.includes(role.superAdmin) || user?.role?.includes(role.admin)) {
         dashboardLink = { name: "Dashboard", path: "/admin", icon: LayoutDashboard };
     } else if (user?.role?.includes(role.sender) && user?.role?.includes(role.receiver)) {
-        dashboardLink = { name: "Dashboard", path: "/common-user", icon: LayoutDashboard };
+        dashboardLink = { name: "Dashboard", path: "/common-user/senderDashboard", icon: LayoutDashboard };
     } else if (user?.role?.includes(role.sender)) {
         dashboardLink = { name: "Dashboard", path: "/sender", icon: LayoutDashboard };
     } else if (user?.role?.includes(role.receiver)) {

@@ -2,14 +2,14 @@ import StatusBadge from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { IParcel, Parcel } from "@/types";
-import type { Person } from "@/types/parcel.type";
+import type { IParcelDetails, Person } from "@/types/parcel.type";
 
 import { Calendar, Eye, MapPin, User } from "lucide-react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router";
 
 interface ParcelTableTrowProps {
-  parcel: Parcel | IParcel;
+  parcel: Parcel | IParcel | IParcelDetails;
   user: Person,
   actionButton?: ReactNode;
 }

@@ -70,7 +70,7 @@ const Hero = () => {
               delivery to anywhere in the world. Your trusted shipping partner.
             </p>
 
-            <div ref={inputRef} className="max-w-lg">
+            <div ref={inputRef} className="max-w-lg" id='tracking-input'>
               <div className="relative group">
                 <div className="relative flex items-center">
                   <input

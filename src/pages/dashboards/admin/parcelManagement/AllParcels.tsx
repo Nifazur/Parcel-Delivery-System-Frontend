@@ -33,8 +33,7 @@ import ParcelTableThead from '@/components/dashboardComponents/parcelTable/Parce
 import ParcelTableTrow from '@/components/dashboardComponents/parcelTable/ParcelTableTrow';
 import ParcelTableHeader from '@/components/dashboardComponents/parcelTable/ParcelTableHeader';
 
-import type { IParcel } from '@/types';
-import type { Person } from '@/types/parcel.type';
+import type { IParcelDetails, Person } from '@/types/parcel.type';
 import { useForm } from 'react-hook-form';
 
 const ReceivedParcels: React.FC = () => {
@@ -68,7 +67,7 @@ const ReceivedParcels: React.FC = () => {
     return { pending, delivered, cancelled };
   }, [statistics]);
 
-  const parcels: IParcel[] = useMemo(() => {
+  const parcels: IParcelDetails[] = useMemo(() => {
     return data?.data?.parcels || [];
   }, [data]);
 

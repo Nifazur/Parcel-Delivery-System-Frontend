@@ -19,7 +19,7 @@ const Footer = () => {
   const [isQuickLinksOpen, setIsQuickLinksOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
 
-  const dashboardPaths = ['/common-user', '/user', '/admin', '/receiver', '/sender'];
+  const dashboardPaths = ['/common-user/senderDashboard', '/user', '/admin', '/receiver', '/sender'];
 
     const isDashboard = dashboardPaths.some(path =>
         location.pathname.startsWith(path)
