@@ -120,7 +120,7 @@ const Home = () => {
                 continuous
                 showProgress
                 showSkipButton
-                scrollToFirstStep
+                scrollToFirstStep={false}
                 scrollOffset={200}
                 spotlightPadding={10}
                 callback={handleJoyrideCallback}

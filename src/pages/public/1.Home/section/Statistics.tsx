@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from 'react';
 import { Package, Users, MapPin, Award } from 'lucide-react';
 
@@ -17,28 +18,28 @@ const Statistics = () => {
   const stats: Stat[] = [
     {
       id: 'deliveries',
-      icon: <Package className="w-8 h-8 text-primary-foreground" />,
+      icon: <Package className="w-8 h-8 text-primary" />,
       number: 50000,
       label: 'Parcels Delivered',
       suffix: '+',
     },
     {
       id: 'customers',
-      icon: <Users className="w-8 h-8 text-primary-foreground" />,
+      icon: <Users className="w-8 h-8 text-primary" />,
       number: 10000,
       label: 'Happy Customers',
       suffix: '+',
     },
     {
       id: 'cities',
-      icon: <MapPin className="w-8 h-8 text-primary-foreground" />,
+      icon: <MapPin className="w-8 h-8 text-primary" />,
       number: 64,
       label: 'Cities Covered',
       suffix: '',
     },
     {
       id: 'rate',
-      icon: <Award className="w-8 h-8 text-primary-foreground" />,
+      icon: <Award className="w-8 h-8 text-primary" />,
       number: 99.5,
       label: 'Success Rate',
       suffix: '%',
@@ -107,19 +108,19 @@ const Statistics = () => {
   }, [isVisible]);
 
   return (
-    <section className="w-full py-20 px-4 bg-gradient-to-br from-primary to-primary/90">
+    <section className="w-full py-20 px-4 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <h2
-            className={`text-4xl md:text-5xl font-bold text-primary-foreground mb-4 transition-all duration-1000 ${
+            className={`text-4xl md:text-5xl font-bold text-foreground mb-4 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
             Our Impact in Numbers
           </h2>
           <p
-            className={`text-primary-foreground/80 text-lg md:text-xl transition-all duration-1000 delay-200 ${
+            className={`text-muted-foreground text-lg md:text-xl transition-all duration-1000 delay-200 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -145,18 +146,18 @@ const Statistics = () => {
               }}
             >
               {/* Icon */}
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-foreground/10 rounded-2xl mb-6 group-hover:scale-110 group-hover:bg-primary-foreground/20 transition-all duration-300">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-2xl mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                 {stat.icon}
               </div>
 
               {/* Number */}
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-2">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2">
                 {counts[stat.id] || 0}
                 {stat.suffix}
               </div>
 
               {/* Label */}
-              <div className="text-primary-foreground/90 text-sm md:text-base font-medium">
+              <div className="text-muted-foreground text-sm md:text-base font-medium">
                 {stat.label}
               </div>
             </div>
@@ -169,10 +170,10 @@ const Statistics = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <p className="text-primary-foreground/90 text-lg mb-4">
+          <p className="text-muted-foreground text-lg mb-4">
             Join thousands of satisfied customers
           </p>
-          <button className="px-8 py-3 bg-primary-foreground text-primary rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg">
+          <button className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg">
             Get Started Today
           </button>
         </div>
