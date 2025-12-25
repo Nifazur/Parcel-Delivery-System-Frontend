@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useMemo } from 'react';
 import {
     Send,
@@ -12,7 +13,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useGetMySentParcelsQuery } from '@/redux/features/parcelApi';
+import { useCancelParcelMutation, useGetMySentParcelsQuery } from '@/redux/features/parcelApi';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
 import ParcelTableHeader from '@/components/dashboardComponents/parcelTable/ParcelTableHeader';
@@ -29,8 +30,8 @@ const SentParcels: React.FC = () => {
 
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useGetMySentParcelsQuery(undefined);
-    console.log(data);
-    
+    const [cancelParcel] = useCancelParcelMutation();
+
     const parcels: Parcel[] = useMemo(() => {
         return data?.data || [];
     }, [data]);
@@ -62,6 +63,16 @@ const SentParcels: React.FC = () => {
 
         return filtered;
     }, [parcels, statusFilter, sortBy]);
+
+    const handleCancel = async (id: string) => {
+        try {
+            await cancelParcel(id).unwrap();
+            toast.success("Parcel cancelled successfully!");
+            refetch();
+        } catch (err) {
+            toast.error("Failed to cancel parcel.");
+        }
+    };
 
     const handleRefresh = () => {
         refetch();
@@ -214,6 +225,16 @@ const SentParcels: React.FC = () => {
                                                         key={parcel._id}
                                                         parcel={parcel}
                                                         user={parcel.receiver}
+                                                        actionButton={
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                disabled={parcel.status !== "dispatched"}
+                                                                onClick={() => handleCancel(parcel._id as string)}
+                                                            >
+                                                                Cancel Parcel
+                                                            </Button>
+                                                        }
                                                     />
                                                 ))}
                                             </tbody>

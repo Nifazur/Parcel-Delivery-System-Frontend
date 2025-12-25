@@ -8,6 +8,8 @@ import OurSpecialties from "./section/OurSpecialties";
 import Pricing from "./section/Pricing";
 import Review from "./section/Review";
 import StepSection from "./section/Step";
+import FAQ from "./section/FAQ";
+import Statistics from "./section/Statistics";
 
 const Home = () => {
     const [run, setRun] = useState(false);
@@ -140,9 +142,11 @@ const Home = () => {
 
             <Hero />
             <StepSection />
+            <Statistics />
             <OurSpecialties />
             <Pricing />
             <Review />
+            <FAQ />
 
         </div>
     );

@@ -19,6 +19,9 @@ import { commonUserSidebarItems } from './commonUserRoutes'
 import CreateParcel from '@/pages/dashboards/CreateParcel'
 import ParcelDetails from '@/pages/public/4.Tracking/ParcelDetails'
 import TrackingSearch from '@/pages/public/4.Tracking/TrackingSearch'
+import PrivacyPolicy from '@/pages/public/5.PrivacyPolicy/PrivacyPolicy'
+import TermsAndConditions from '@/pages/public/6.TermsAndConditions/TermsAndConditions'
+import HelpSupport from '@/pages/public/7.HelpSupport/HelpSupport'
 
 export const router = createBrowserRouter([
     {
@@ -96,6 +99,18 @@ export const router = createBrowserRouter([
                     { index: true, element: <Navigate to="senderDashboard" /> },
                     ...generateRoutes(commonUserSidebarItems),
                 ],
+            },
+            {
+                Component: PrivacyPolicy,
+                path: "/privacy"
+            },
+            {
+                Component: TermsAndConditions,
+                path: "/terms"
+            },
+            {
+                Component: HelpSupport,
+                path: "/help",
             },
         ]
     }

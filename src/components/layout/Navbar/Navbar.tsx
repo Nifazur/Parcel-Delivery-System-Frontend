@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { Menu, X, Home, Search, MapPin, HelpCircle, LayoutDashboard, PackagePlus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Home, Search, MapPin, HelpCircle, LayoutDashboard, PackagePlus, ChevronDown } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "../ModeToggler";
 import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/authApi";
-import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/redux/hook";
 import { role } from "@/constants/role";
 import { toast } from "sonner";
@@ -12,7 +18,21 @@ import { toast } from "sonner";
 const Navbar = () => {
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+    const { data, isLoading } = useUserInfoQuery(undefined);
+    const [logout] = useLogoutMutation();
+    const dispatch = useAppDispatch();
+
+    // ✅ Sticky navbar on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const navLinks = [
         { name: "Home", path: "/", icon: Home },
@@ -20,10 +40,6 @@ const Navbar = () => {
         { name: "Contact", path: "/contact", icon: MapPin },
         { name: "Tracking", path: "/track-parcel", icon: Search },
     ];
-
-    const { data, isLoading } = useUserInfoQuery(undefined);
-    const [logout] = useLogoutMutation();
-    const dispatch = useAppDispatch();
 
     const dashboardPaths = ['/common-user', '/user', '/admin', '/receiver', '/sender'];
 
@@ -63,10 +79,11 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm border-b sticky top-0 z-50">
+        <nav className={`bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm border-b sticky top-0 z-50 transition-all duration-300 ${
+            isScrolled ? 'shadow-lg bg-background/98' : ''
+        }`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    {/* Logo Section - Left */}
                     <div className="flex items-center flex-shrink-0">
                         <NavLink to="/" className="flex items-center">
                             <img src="/image.png" className="h-14 w-14 mr-3" alt="Logo" />
@@ -74,7 +91,6 @@ const Navbar = () => {
                         </NavLink>
                     </div>
 
-                    {/* Center Navigation - Desktop */}
                     <div className="hidden lg:flex flex-1 justify-center">
                         <div className="flex items-center space-x-1">
                             {navLinks.map((link) => {
@@ -95,7 +111,35 @@ const Navbar = () => {
                                     </NavLink>
                                 );
                             })}
-                            {/* Dashboard link for logged-in users */}
+
+                            {/* ✅ Services Mega Menu */}
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-200">
+                                    Services
+                                    <ChevronDown className="ml-1 h-4 w-4" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-80 p-4">
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                                            <div className="font-semibold text-primary">Express Delivery</div>
+                                            <div className="text-xs text-muted-foreground">Same day delivery</div>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                                            <div className="font-semibold text-primary">Standard Shipping</div>
+                                            <div className="text-xs text-muted-foreground">3-5 business days</div>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                                            <div className="font-semibold text-primary">International</div>
+                                            <div className="text-xs text-muted-foreground">Worldwide delivery</div>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem className="flex flex-col items-start p-3 cursor-pointer">
+                                            <div className="font-semibold text-primary">Bulk Orders</div>
+                                            <div className="text-xs text-muted-foreground">Special rates</div>
+                                        </DropdownMenuItem>
+                                    </div>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+
                             {dashboardLink && (
                                 <NavLink
                                     to={dashboardLink.path}
@@ -117,9 +161,7 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Right Side - Auth Buttons & Controls */}
                     <div className="flex items-center space-x-3 flex-shrink-0">
-                        {/* Auth Buttons */}
                         <div className="hidden sm:flex items-center space-x-2">
                             {isLoading ? null : data?.data?.email ? (
                                 <Button
@@ -146,26 +188,18 @@ const Navbar = () => {
                             )}
                         </div>
 
-                        {/* Theme Toggle */}
                         <ModeToggle />
 
-                        {/* Mobile menu button */}
                         <button
                             onClick={toggleMenu}
                             className="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors duration-200"
-                            aria-expanded="false"
                         >
-                            <span className="sr-only">Open main menu</span>
-                            {isMenuOpen ? (
-                                <X className="block h-6 w-6" aria-hidden="true" />
-                            ) : (
-                                <Menu className="block h-6 w-6" aria-hidden="true" />
-                            )}
+                            {isMenuOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
                         </button>
                     </div>
                 </div>
 
-                {/* Mobile Navigation Menu */}
+                {/* Mobile Menu */}
                 {isMenuOpen && (
                     <div className="lg:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t shadow-sm">
@@ -191,24 +225,17 @@ const Navbar = () => {
                             {dashboardLink && (
                                 <NavLink
                                     to={dashboardLink.path}
-                                    className={({ isActive }) =>
-                                        `flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${isActive
-                                            ? "text-primary bg-primary/10"
-                                            : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                                        }`
-                                    }
+                                    className="flex items-center px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-200"
+                                    onClick={() => setIsMenuOpen(false)}
                                 >
-                                    <dashboardLink.icon className="h-4 w-4 mr-2" />
+                                    <dashboardLink.icon className="h-5 w-5 mr-3" />
                                     {dashboardLink.name}
                                 </NavLink>
                             )}
 
-                            {/* Mobile Auth Buttons */}
                             <div className="pt-4 pb-2 border-t mt-4">
                                 {isLoading ? null : data?.data?.email ? (
-                                    <span className="block px-3 py-2 text-base font-medium text-foreground">
-                                        {data.data.email}
-                                    </span>
+                                    <Button onClick={handleLogout} className="w-full">Sign Out</Button>
                                 ) : (
                                     <>
                                         <NavLink

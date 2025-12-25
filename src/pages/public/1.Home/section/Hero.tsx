@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect, useRef } from 'react';
-import { Search } from 'lucide-react';
+import { ChevronDown, Search } from 'lucide-react';
 import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
 import heroAnimation from '@/assets/deliveryman.json';
@@ -12,7 +12,7 @@ const Hero = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate()
 
-  
+
 
   // GSAP animations
   useLayoutEffect(() => {
@@ -35,7 +35,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-[600px] md:min-h-[700px] lg:min-h-screen flex items-center bg-background relative ">
+    <section className="min-h-[500px] md:min-h-[600px] lg:max-h-[70vh] flex items-center bg-background relative py-12">
       {/* Background Video - only visible on mobile/tablet */}
       <div className="hidden sm:flex lg:hidden absolute bottom-0 left-0 w-full justify-end items-end z-0">
         <Lottie
@@ -111,7 +111,15 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      <button
+        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden md:block"
+        aria-label="Scroll to next section"
+      >
+        <ChevronDown className="w-8 h-8 text-primary" />
+      </button>
     </section>
+
   );
 };
 

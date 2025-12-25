@@ -5,13 +5,11 @@ import {
   Phone, 
   Mail, 
   MapPin, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
+  Facebook,
   Linkedin,
-
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Github
 } from 'lucide-react';
 
 const Footer = () => {
@@ -38,18 +36,17 @@ const Footer = () => {
   ];
 
   const services = [
-    { name: 'Express Delivery', path: '/express' },
-    { name: 'Standard Shipping', path: '/standard' },
-    { name: 'International', path: '/international' },
-    { name: 'Same Day Delivery', path: '/same-day' },
-    { name: 'Bulk Orders', path: '/bulk' }
+    { name: 'Express Delivery', path: '/create-parcel' },
+    { name: 'Standard Shipping', path: '/create-parcel' },
+    { name: 'International', path: '/create-parcel' },
+    { name: 'Same Day Delivery', path: '/create-parcel' },
+    { name: 'Bulk Orders', path: '/create-parcel' }
   ];
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: '#' },
-    { name: 'Twitter', icon: Twitter, href: '#' },
-    { name: 'Instagram', icon: Instagram, href: '#' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#' }
+    { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/nifazur.rahman.nahaz.1419' },
+    { name: 'Github', icon: Github, href: 'https://github.com/Nifazur' },
+    { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/nifazur-rahman/' }
   ];
 
   return (
@@ -220,10 +217,10 @@ const Footer = () => {
                 Terms of Service
               </NavLink>
               <NavLink
-                to="/cookies"
+                to="/help"
                 className="text-muted-foreground hover:text-primary transition-colors duration-200"
               >
-                Cookie Policy
+                Help Support
               </NavLink>
             </div>
           </div>
